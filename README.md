@@ -50,15 +50,19 @@ Database Programming Project
 
 
 📒 어려웠던 알고리즘
-create or replace view recView as
-select distinct d.c_id cid, d.class_num cnum, cname, course.prof_id pid, course.credit credit
-from course_dinfo d, course "
-where course.c_id = d.c_id and course.class_num = d.class_num and 
-(d.c_id, d.class_num) not in (select c_id, class_num 	     from course_dinfo d  
-where (day_week, times) in (select distinct d.day_week dday_week, d.times dtimes 
-from wish w, course_dinfo d 	                                                                             where w.c_id = d.c_id and 
-w.class_num = d.class_num and 
-w.stu_id = " + stuId + " and w.wish_id = " + wishNum + "))
+
+	create or replace view recView as
+		select distinct d.c_id cid, d.class_num cnum, cname, course.prof_id pid, course.credit credit
+		from course_dinfo d, course
+		where course.c_id = d.c_id and course.class_num = d.class_num and 
+		(d.c_id, d.class_num) not in (select c_id, class_num from course_dinfo d  
+			where (day_week, times) in (select distinct d.day_week dday_week, d.times dtimes 
+				from wish w, course_dinfo d where w.c_id = d.c_id and 
+				w.class_num = d.class_num and 
+				w.stu_id = " + stuId + " and w.wish_id = " + wishNum + "))
+				
+	위시에 담긴 강좌들의 시간들을 in을 통해 담고
+	not in을 사용하여 그 시간들이 없는 강의만 출력
 
 
 
